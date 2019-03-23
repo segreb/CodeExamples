@@ -1,6 +1,3 @@
-// есть существенный недостаток - если коллекции делается Clear, то нужно в реализации
-// Item.Destroy прописывать удаление из индексов. Все-таки нужна базовая реализация Item
-
 unit uDihotomedCollection;
 
 interface
@@ -83,11 +80,9 @@ begin
 end;
 
 procedure TDihotomedCollection.Put(item: TDihotomedItem);
-//function TDihotomedCollection.Add: TCollectionItem;
 var
   i : integer;
 begin
-//  Result := inherited Add;
   if FIndexCount>0 then
     for i:=0 to FIndexCount-1 do
       AddToIndex(item.Index, i);
@@ -120,8 +115,7 @@ begin
 
       TMethod(IndexList[IndexNumber].IndexedProperty).Data := Idx.FList.Items[I];
 
-      C := Idx.CompareFunc({TIndexedProperty(func),}
-                           IndexList[IndexNumber].IndexedProperty,
+      C := Idx.CompareFunc(IndexList[IndexNumber].IndexedProperty,
                            Data);
 
       if C < 0 then
@@ -165,7 +159,6 @@ end;
 function TDihotomedCollection.AddToIndex(Index: Integer; IndexNumber: integer): boolean;
 var
   Position, ItemIndex : integer;
-//  func: TMethod;
 begin
   TMethod(IndexList[IndexNumber].IndexedProperty).Data := Items[Index];
 
